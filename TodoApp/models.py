@@ -1,11 +1,12 @@
 from database import Base
-from sql_alchemy import Columns,Integer,String,Boolean
+from sqlalchemy import Column, Integer, String, Boolean
+
 
 class Todos(Base):
-    __tablename__="todos"
-    id= Columns(Integer, primary_key=True,index=True)
-    title= Columns(String)
-    description= Columns(String)
-    priority=Columns(Integer)
-    complete=Columns(Boolean,default=False)
-
+    __tablename__ = "todos"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+    priority = Column(Integer)
+    complete = Column(Boolean, default=False)
+    
