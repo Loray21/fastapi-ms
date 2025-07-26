@@ -48,3 +48,17 @@ sqlite3 todos.db
 .mode table
 
 ```
+
+
+
+## USER MODELS
+
+
+
+
+
+## hash password
+pip install passlib
+pip install Bcrypt==4.0.1
+
+hay que instalar esa version prq passlib y Bcrypt trabajan juntos.

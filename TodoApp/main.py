@@ -6,11 +6,15 @@ from sqlalchemy.orm import Session
 from models import Todos
 from starlette import status
 from pydantic import BaseModel, Field
-from routers import auth
+from routers import auth, todos
 
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
+
+
+app.include_router(auth.router)
+app.include_router(todos.router)
 
 
 def get_db():
@@ -78,6 +82,3 @@ async def delete(db: db_dependecy,
     db.commit()
     if todo == 0:
         raise HTTPException(status_code=404, detail="Not found")
-
-
-app.include_router(auth.router)
