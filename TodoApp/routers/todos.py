@@ -7,6 +7,7 @@ from models import Todos
 from starlette import status
 from pydantic import BaseModel, Field
 from fastapi import APIRouter
+from auth import user_dependency
 
 
 router = APIRouter()
@@ -44,8 +45,12 @@ async def get_by_id(db: db_dependecy, todoid: int = Path(gt=0)):
 
 
 @router.post("/todo", status_code=status.HTTP_201_CREATED)
-async def create_todo(db: db_dependecy, todo_request: TodoRequest):
-    db.add(Todos(**todo_request.dict()))
+async def create_todo(user: user_dependency,
+                      db: db_dependecy,
+                      todo_request: TodoRequest):
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authentication Failed')                  
+    db.add(Todos(**todo_request.dict(), owner_id=user.get('id')))
     db.commit()
 
 
